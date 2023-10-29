@@ -40,3 +40,14 @@
 .read-the-docs {
   color: #888;
 }
+
+.star-button {
+  border: none;
+  padding: 0;
+  background-color: transparent;
+  cursor: pointer;
+}
+
+.star-button:focus {
+  outline: none;
+}
