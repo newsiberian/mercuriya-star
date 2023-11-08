@@ -1,7 +1,7 @@
 import { useState } from 'react';
 
-import { FloatingStar } from './FloatingStar';
-import { StarTail } from './StarTail';
+import { FloatingStar } from './FloatingStar/index.mjs';
+import { StarTail } from './StarTail/index.mjs';
 
 export function StarButton() {
   const [hover, setHover] = useState(false);

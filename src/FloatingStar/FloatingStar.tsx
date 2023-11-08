@@ -1,5 +1,5 @@
 import { StarPath } from './StarPath.tsx';
-import { useStarBaseAnimation } from './useStarBaseAnimation';
+import { useStarBaseAnimation } from './useStarBaseAnimation.mjs';
 
 export function FloatingStar({ hover }: { hover: boolean }) {
   const { starSvgRef } = useStarBaseAnimation(hover);

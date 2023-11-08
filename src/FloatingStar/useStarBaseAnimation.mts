@@ -1,8 +1,7 @@
 import { useRef, useState } from 'react';
 import { useAnimationFrame } from 'framer-motion';
 
-import { ROUND_TIME } from './StarPath';
-
+export const ROUND_TIME = 4000;
 const PAUSE_DURATION = 400;
 const hoveredFinalXPosition = -100; // Конечная позиция объекта по X
 
@@ -52,7 +51,7 @@ export function useStarBaseAnimation(pause: boolean) {
       x = computeX(time);
     }
 
-    const transform = [];
+    const transform: string[] = [];
     transform.push(`translateX(${x}px)`);
     transform.push(`translateY(${y}px)`);
     transform.push(`rotate(${pause ? 0 : rotate}deg`);

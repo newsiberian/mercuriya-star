@@ -8,7 +8,7 @@ import {
 } from 'framer-motion';
 import { interpolate } from 'flubber';
 
-export const ROUND_TIME = 4000;
+import { ROUND_TIME } from './useStarBaseAnimation.mjs';
 
 function useFlubber(progress: MotionValue<number>, paths: string[]) {
   return useTransform(
@@ -25,7 +25,7 @@ function useFlubber(progress: MotionValue<number>, paths: string[]) {
 // 'M28.3138 13.0601L23.4643 0L18.8919 14.92L5.73141 9.13967L11.589 22.7417L1.13989 32.0676L14.6158 33.3713L14.556 48L23.7247 36.9694L34.2001 46.8444L33.4428 32.1823L46.8542 28.7919L34.2622 21.1707L40.6048 6.89534L28.3138 13.0601Z',
 // hours position on a clock face
 // order: 7h, 12h, 5h, 10h, 2h, 8h, 4h
-export const paths = [
+const paths = [
   // initial
   'M28.3138 13.0601L23.4643 0L18.8919 14.92L5.73141 9.13967L11.589 22.7417L1.13989 32.0676L14.6158 33.3713L14.556 48L23.7247 36.9694L34.2001 46.8444L33.4428 32.1823L46.8542 28.7919L34.2622 21.1707L40.6048 6.89534L28.3138 13.0601Z',
   //                                                                                                              vvv 7h
