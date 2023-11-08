@@ -1,7 +1,6 @@
 import { useState } from 'react';
 
 import { FloatingStar } from './FloatingStar';
-import { FlyingStar } from './FlyingStar';
 import { StarTail } from './StarTail';
 
 export function StarButton() {
@@ -20,15 +19,10 @@ export function StarButton() {
       className="star-button"
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
+      style={{ display: 'flex', alignItems: 'center' }}
     >
-      {hover ? (
-        <div style={{ display: 'flex', alignItems: 'center' }}>
-          <FlyingStar />
-          <StarTail />
-        </div>
-      ) : (
-        <FloatingStar />
-      )}
+      <FloatingStar hover={hover} />
+      {hover && <StarTail />}
     </button>
   );
 }
