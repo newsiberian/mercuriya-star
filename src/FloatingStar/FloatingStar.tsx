@@ -1,10 +1,17 @@
+import type { JSX } from 'react';
 import { motion } from 'framer-motion';
 
 import { StarTail } from '../StarTail/index.mjs';
+import { PAUSE_DURATION } from '../StarTail/constants.mjs';
 import { StarPath } from './StarPath.tsx';
 import { useStarBaseAnimation } from './useStarBaseAnimation.mjs';
 
-export function FloatingStar({ hover }: { hover: boolean }) {
+type FloatingStarProps = {
+  text: JSX.Element;
+  hover: boolean;
+};
+
+export function FloatingStar({ hover, text }: FloatingStarProps) {
   // const hover = true;
   const { starSvgRef } = useStarBaseAnimation(hover);
 
@@ -27,7 +34,7 @@ export function FloatingStar({ hover }: { hover: boolean }) {
           restDelta: 0.001,
         }}
       >
-        <svg viewBox="-2 -2 54 54">
+        <svg width="54" height="54" viewBox="-2 -2 54 54">
           <StarPath pauseAnimation={hover} />
         </svg>
 
@@ -36,11 +43,22 @@ export function FloatingStar({ hover }: { hover: boolean }) {
             id="tail"
             width="210"
             height="161"
-            viewBox="-34 51 210 161"
+            viewBox="-35 50 210 161"
             // to be able to render tail outside of parent viewBox
             style={{ overflow: 'visible' }}
           >
             <StarTail />
+            <motion.foreignObject
+              x="0"
+              y="25%"
+              width="100%"
+              height="35%"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: PAUSE_DURATION / 2 / 1000, duration: 0.5 }}
+            >
+              {text}
+            </motion.foreignObject>
           </svg>
         )}
       </motion.g>
