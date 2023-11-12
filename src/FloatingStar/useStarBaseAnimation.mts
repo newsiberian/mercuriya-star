@@ -3,7 +3,7 @@ import { useAnimationFrame } from 'framer-motion';
 
 export const ROUND_TIME = 4000;
 const PAUSE_DURATION = 400;
-const hoveredFinalXPosition = -100; // Конечная позиция объекта по X
+const hoveredFinalXPosition = 0;
 
 const computeY = (time: number) => (1 + Math.sin(time / 1000)) * -5;
 

@@ -1,1 +1,1 @@
-export {StarTail} from './StarTail.tsx'
+export { StarTail } from './StarTail.tsx';

@@ -1,10 +1,10 @@
 import { useEffect, useState } from 'react';
 import {
+  animate,
   motion,
   useMotionValue,
   useTransform,
   MotionValue,
-  animate,
 } from 'framer-motion';
 import { interpolate } from 'flubber';
 

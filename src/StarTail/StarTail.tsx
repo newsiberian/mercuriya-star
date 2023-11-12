@@ -1,5 +1,5 @@
 import { useRef } from 'react';
-import { motion, useAnimationFrame } from 'framer-motion';
+import { useAnimationFrame } from 'framer-motion';
 
 import {
   LOWER_CURVE_START_X,
@@ -69,27 +69,8 @@ export function StarTail() {
       upperCurve,
     )}Z`;
 
-    console.dir({ path });
-
     starTailRef.current?.setAttribute('d', path);
   });
 
-  return (
-    <motion.svg
-      width="210"
-      height="161"
-      viewBox="0 0 210 161"
-      fill="none"
-      xmlns="http://www.w3.org/2000/svg"
-      initial={{ transform: 'translate(32px, 5px)' }}
-      animate={{ transform: 'translate(-68px, 5px)' }}
-      transition={{
-        ease: 'linear',
-        duration: 0.4,
-      }}
-      style={{ position: 'absolute' }}
-    >
-      <path ref={starTailRef} fill="#458FD6" />
-    </motion.svg>
-  );
+  return <path ref={starTailRef} fill="#458FD6" />;
 }
