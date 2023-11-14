@@ -12,3 +12,5 @@ export const LOWER_START_RAY_X = 0;
 export const LOWER_START_RAY_Y = 73;
 
 export const PAUSE_DURATION = 400;
+
+export const CURVE_CACHE_SIZE = 6000;

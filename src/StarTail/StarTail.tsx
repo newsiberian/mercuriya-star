@@ -2,7 +2,6 @@ import { useRef } from 'react';
 import { useAnimationFrame } from 'framer-motion';
 
 import {
-  LOWER_CURVE_START_X,
   LOWER_START_RAY_X,
   LOWER_START_RAY_Y,
   PAUSE_DURATION,
@@ -10,28 +9,20 @@ import {
   UPPER_CURVE_START_X,
   UPPER_CURVE_START_Y,
 } from './constants.mjs';
-import {
-  buildLowerCurve,
-  buildUpperCurve,
-  curveDataToString,
-  toFixed,
-} from './utils.mjs';
+import { useCurvesBuilders } from './utils/curveBuilders.mjs';
+import { curveDataToString, toFixed } from './utils/utils.mjs';
 
 export function StarTail() {
   const starTailRef = useRef<SVGPathElement>(null);
-  const lowerCurveAnimationStartDelay = useRef(0);
+  const { buildLowerCurve, buildUpperCurve } = useCurvesBuilders();
 
   useAnimationFrame(time => {
-    if (time === 0) {
-      lowerCurveAnimationStartDelay.current = 0;
-    }
-
     if (time >= PAUSE_DURATION) {
       return;
     }
 
     // we can't afford having time = 0 here, because vertical line will be too short
-    const t = time / PAUSE_DURATION;
+    const t = toFixed(time / PAUSE_DURATION, 4);
 
     // we assume that starting point ("x") should be in parallel w/ lower curve "x"
     // because its located righter than upper curve starting "x"
@@ -41,22 +32,7 @@ export function StarTail() {
 
     // compute tail movement here
     const upperCurve = buildUpperCurve(t, tailEndX);
-
-    // add a delay for start animating lower curve until upper curve not cross
-    // lower curve beginning vertically
-    if (
-      upperCurve.x >= LOWER_CURVE_START_X &&
-      lowerCurveAnimationStartDelay.current === 0
-    ) {
-      lowerCurveAnimationStartDelay.current = t;
-    }
-
-    const lowerCurve = buildLowerCurve(
-      lowerCurveAnimationStartDelay.current === 0
-        ? 0
-        : t - lowerCurveAnimationStartDelay.current,
-      tailEndX,
-    );
+    const lowerCurve = buildLowerCurve(t, tailEndX);
 
     // orig vvv
     // M210 0.653122V160.986C161 126.5 78 93 13 80.5L0 73L7.5 59C80.5328 23.6588 146.706 8.98359 210 0.653122Z

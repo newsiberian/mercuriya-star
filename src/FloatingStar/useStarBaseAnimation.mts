@@ -1,8 +1,9 @@
 import { useRef, useState } from 'react';
 import { useAnimationFrame } from 'framer-motion';
 
+import { PAUSE_DURATION } from '../StarTail/constants.mjs';
+
 export const ROUND_TIME = 4000;
-const PAUSE_DURATION = 400;
 const hoveredFinalXPosition = 0;
 
 const computeY = (time: number) => (1 + Math.sin(time / 1000)) * -5;

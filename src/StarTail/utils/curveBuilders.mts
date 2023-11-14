@@ -1,52 +1,54 @@
+import { useMemo } from 'react';
+
 import {
+  CURVE_CACHE_SIZE,
   LOWER_CURVE_END_Y,
   LOWER_CURVE_START_X,
   LOWER_CURVE_START_Y,
   UPPER_CURVE_END_Y,
   UPPER_CURVE_START_X,
   UPPER_CURVE_START_Y,
-} from './constants.mjs';
+} from '../constants.mjs';
+import { easeInSine, easeOutSine } from './easings.mjs';
+import { toFixed } from './utils.mjs';
+import { useStarTailContext } from '../StarTailContext.mjs';
 
-export const curveDataToString = ({
-  x1,
-  y1,
-  x2,
-  y2,
-  x,
-  y,
-}: {
-  x1: number;
-  y1: number;
-  x2: number;
-  y2: number;
-  x: number;
-  y: number;
-}) => [x1, y1, x2, y2, x, y].join(' ');
+function curveBuilder<
+  BuilderReturnType extends ReturnType<
+    typeof buildUpperCurve | typeof buildLowerCurve
+  >,
+>(
+  builder: (...args: [number, number]) => BuilderReturnType,
+  externalCache?: Map<string, BuilderReturnType>,
+) {
+  const cache = externalCache || new Map<string, BuilderReturnType>();
 
-export const toFixed = (number: number) => +number.toFixed(2);
+  return (...args: [number, number]) => {
+    if (cache.has(args.toString())) {
+      const cachedResult = cache.get(args.toString());
 
-function reverseAttenuationInSine(x: number): number {
-  return 0.04 * Math.cos(x * Math.PI) * Math.cos(x * Math.PI);
+      if (cachedResult) {
+        console.log(
+          `Result for ${builder.name} returned from cache (size: ${cache.size})`,
+          args,
+        );
+        return cachedResult;
+      }
+    }
+
+    console.log(builder.name, ...args);
+
+    const result = builder(...args);
+
+    if (cache.size <= CURVE_CACHE_SIZE) {
+      cache.set(args.toString(), result);
+    }
+
+    return result;
+  };
 }
 
-function reverseAttenuationOutSine(x: number): number {
-  return 0.04 * Math.sin(x * Math.PI) * Math.sin(x * Math.PI);
-}
-
-function easeInSine(x: number): number {
-  return (
-    1 -
-    Math.cos((x * Math.PI) / 2) +
-    reverseAttenuationInSine(x) +
-    reverseAttenuationOutSine(x)
-  );
-}
-
-function easeOutSine(x: number): number {
-  return Math.sin((x * Math.PI) / 2) - reverseAttenuationOutSine(x);
-}
-
-export const buildUpperCurve = (time: number, tailEndX: number) => {
+const buildUpperCurve = (time: number, tailEndX: number) => {
   const horizontalCurveLength = tailEndX - UPPER_CURVE_START_X;
   // C(t) = A + (B - A) * (t / Tmax)
   const y = toFixed(
@@ -93,7 +95,7 @@ export const buildUpperCurve = (time: number, tailEndX: number) => {
   return { x1, y1, x2, y2, x: tailEndX, y };
 };
 
-export const buildLowerCurve = (time: number, tailEndX: number) => {
+const buildLowerCurve = (time: number, tailEndX: number) => {
   const horizontalCurveLength = tailEndX - LOWER_CURVE_START_X;
 
   // C(t) = A + (B - A) * (t / Tmax)
@@ -149,3 +151,31 @@ export const buildLowerCurve = (time: number, tailEndX: number) => {
     verticalLineY,
   };
 };
+
+const cacheableBuildUpperCurve = curveBuilder(buildUpperCurve);
+const cacheableBuildLowerCurve = curveBuilder(buildLowerCurve);
+
+export {
+  cacheableBuildUpperCurve as buildUpperCurve,
+  cacheableBuildLowerCurve as buildLowerCurve,
+};
+
+export function useCurvesBuilders() {
+  const { upperCurveBuilderCache, lowerCurveBuilderCache } =
+    useStarTailContext();
+
+  const buildUpperCurveCallback = useMemo(
+    () => curveBuilder(buildUpperCurve, upperCurveBuilderCache),
+    [upperCurveBuilderCache],
+  );
+
+  const buildLowerCurveCallback = useMemo(
+    () => curveBuilder(buildLowerCurve, lowerCurveBuilderCache),
+    [lowerCurveBuilderCache],
+  );
+
+  return {
+    buildUpperCurve: buildUpperCurveCallback,
+    buildLowerCurve: buildLowerCurveCallback,
+  };
+}

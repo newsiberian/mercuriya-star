@@ -12,7 +12,6 @@ type FloatingStarProps = {
 };
 
 export function FloatingStar({ hover, text }: FloatingStarProps) {
-  // const hover = true;
   const { starSvgRef } = useStarBaseAnimation(hover);
 
   return (
