@@ -1,27 +1,5 @@
-# React + TypeScript + Vite
+# Mercuriya star
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+This star will serve as a donation button on the Mercuriya website. The concept was initially suggested by the brand creators, but it took me several years to find the right tool, namely `framer-motion`, to implement it in a manner that aligns with my preferences.
 
-Currently, two official plugins are available:
-
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
-
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
-
-- Configure the top-level `parserOptions` property like this:
-
-```js
-   parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-    project: ['./tsconfig.json', './tsconfig.node.json'],
-    tsconfigRootDir: __dirname,
-   },
-```
-
-- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
-- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
+I'm currently experimenting with various concepts during my free time, so memorization in this case seems unnecessary. Despite CPU debouncing, the tail animation will maintain its smoothness. The intention behind this was to explore and gain a better understanding of how memoizing affects animation performance and how much space it could give in terms of computation complexity. 

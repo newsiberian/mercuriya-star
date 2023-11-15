@@ -9,6 +9,8 @@ import {
 } from './StarTail/utils/curveBuilders.mjs';
 import { toFixed } from './StarTail/utils/utils.mjs';
 
+// todo read CURVE_CACHE_SIZE from locale storage and Duration too
+
 function fulfilCurvesWorker() {
   const upperCurveBuilderCache = new Map<
     string,
