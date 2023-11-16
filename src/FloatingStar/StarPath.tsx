@@ -68,7 +68,7 @@ export const StarPath = ({ pauseAnimation }: { pauseAnimation: boolean }) => {
 
   useEffect(() => {
     const animation = animate(progress, pathIndex, {
-      duration: ROUND_TIME / 7 / 1000,
+      duration: ROUND_TIME / topsArr.length / 1000,
       ease: 'easeInOut',
       onComplete: () => {
         if (pathIndex === paths.length - 1) {

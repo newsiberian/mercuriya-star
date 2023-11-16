@@ -27,7 +27,7 @@ export function StarButton({ text, ...props }: StarButtonProps) {
     };
 
     return () => worker.terminate();
-  }, [setUpperCurveBuilderCache]);
+  }, [setLowerCurveBuilderCache, setUpperCurveBuilderCache]);
 
   const handleMouseEnter = () => {
     setHover(true);
